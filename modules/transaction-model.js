@@ -2,17 +2,23 @@ const mongoose = require("mongoose");
 
 const schema = mongoose.Schema;
 
-const expensesSchema = new schema({
-    text: { type: String,},
-    date: { type: Date, default: Date.now },
-    userID: { type: schema.Types.ObjectId, ref: "Users" }
-
+const locationSchema = new schema({
+  country: { type: String,required: true },
+  city: { type: String,required: true },
 });
 
 const transactionSchema = new schema(
   {
-    income: { type: Number, required: true },
-    expenses: [expensesSchema],
+    userID: { type: schema.Types.ObjectId, ref: "Users" },
+    paymentType: { type: String, required: true },
+    paymentMethod: { type: String, required: true },
+    cancelled: { type: Boolean, required: true },
+    date: { type: Date, default: Date.now },
+    currency: { type: String, required: true },
+    category: { type: String, required: true },
+    company: { type: String, required: true },
+    amount: { type: String, required: true },
+    location: [locationSchema],
  }
 )
 

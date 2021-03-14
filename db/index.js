@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
+const url='mongodb://localhost:27017/Budget'
+const connectDB = async () => {
+    try{
+        await mongoose.connect(url,{ useNewUrlParser: true,useUnifiedTopology:true })
+        console.log('MongoDb connected');
+    }catch(err){
+        console.error(err.message);
+    }
+}
 
-mongoose
-    .connect( "mongodb://localhost:27017/Budget",{ useNewUrlParser: true,useUnifiedTopology:true })
-    .catch(e => {
-        console.error('Connection error', e.message)
-    });
-const db = mongoose.connection;
-
-module.exports = db;
+module.exports = connectDB;
 
