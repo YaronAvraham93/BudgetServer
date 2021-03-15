@@ -1,18 +1,16 @@
 const Transaction = require("../modules/transaction-model");
+const { validationResult } = require("express-validator");
+
 
 const createTransaction = async (req, res) => {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+      return res.status(400).json({errors:errors.array()})
+    }
+    try {
   const body = req.body;
-
-  if (!body) {
-    return res.status(400).json({
-      success: false,
-      error: "Error ! Make sure you fill in all the fields",
-    });
-  }
-  try {
-    const transaction = Transaction(body);
-
-    await transaction.save();
+    const transactionReq = Transaction(body);
+    const transaction = await transactionReq.save();
     return res.status(201).json({
       success: true,
       id: transaction._id,
@@ -28,13 +26,14 @@ const createTransaction = async (req, res) => {
 
 const getTransaction = async (req, res) => {
   try {
-    await Transaction.find();
+ const transaction = await Transaction.find();
     if (!transaction) {
       return res
         .status(404)
         .json({ success: false, error: "not a single transaction was found" });
+    }else{
+        return res.status(200).json({ success: true, data: transaction });
     }
-    return res.status(200).json({ success: true, data: transaction });
   } catch (err) {
     return res.status(400).json({
       success: false,
@@ -46,30 +45,24 @@ const getTransaction = async (req, res) => {
 
 const deleteTransaction = async (req, res) => {
   try {
-    await Transaction.findOneAndDelete(
-      { _id: req.params.id },
-      (err, transaction) => {
-        if (err) {
-          return res.status(400).json({ success: false, err });
-        }
+ const transaction = await Transaction.findOneAndDelete( { _id: req.params.id })
         if (!transaction) {
           return res.statuse(404).json({ success: false, err });
-        }
+        }else{
         return res
           .status(200)
           .json({ success: true, message: "The transaction has been deleted" });
-      }
-    );
+    }
   } catch (err) {
-    console.error(err.message);
+       return res.status(400).json({ success: false, err });
   }
 };
 
 const updateTransaction = async (req, res) => {
   try {
     const body = req.body;
-    await Transaction.updateOne({ _id: req.params.id }, body);
-    return res.status(200).json({ success: true });
+  const transaction = await Transaction.updateOne({ _id: req.params.id }, body);
+    return res.status(200).json({ success: true, data:transaction });
   } catch (err) {
     return res.status(400).json({
       err,

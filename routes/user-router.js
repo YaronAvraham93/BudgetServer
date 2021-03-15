@@ -1,15 +1,16 @@
 const express = require('express');
 const userCtrl = require('../controllers/user-ctrl');
+const validation = require('../validationChacks/validation')
 
 const router = express.Router();
 
-router.post('/user', userCtrl.createUser);
+router.post('/',validation.userValidation,userCtrl.createUser);
 
-router.get('/user/:id', userCtrl.getUserById);
+router.get('/:id', userCtrl.getUserById);
 
-router.delete('/user/:id', userCtrl.deleteUser);
+router.delete('/:id', userCtrl.deleteUser);
 
-router.put('/user/:id', userCtrl.updateUser);
+router.put('/:id', userCtrl.updateUser);
 
 
 

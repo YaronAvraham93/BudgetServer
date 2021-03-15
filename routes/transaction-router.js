@@ -1,14 +1,16 @@
 const express = require('express');
 const transactionCtrl = require('../controllers/transaction-ctrl');
+const validation = require('../validationChacks/validation')
+
 
 const router = express.Router();
 
-router.post('/transaction',transactionCtrl.createTransaction);
+router.post('/',validation.transactionValidation,transactionCtrl.createTransaction);
 
 router.get('/transactions', transactionCtrl.getTransaction);
 
-router.delete('/transaction/:id',transactionCtrl.deleteTransaction);
+router.delete('/:id',transactionCtrl.deleteTransaction);
 
-router.put('/transaction/:id', transactionCtrl.updateTransaction);
+router.put('/:id', transactionCtrl.updateTransaction);
 
 module.exports = router;

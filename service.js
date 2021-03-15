@@ -1,5 +1,4 @@
 const express=require('express');
-const bodyParser = require('body-parser')
 const cors = require('cors')
 const connectDB = require('./db/index')
 const app=express();
@@ -10,8 +9,8 @@ app.use(express.json({extended:true}));
 const userRouter = require('./routes/user-router')
 const transaction = require('./routes/transaction-router')
 
-
-app.use('/api',userRouter,transaction)
+app.use('/api/transaction',transaction)
+app.use('/api/user',userRouter)
 
 
 const PORT=process.env.PORT || 3001
