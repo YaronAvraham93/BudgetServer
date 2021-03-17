@@ -13,8 +13,7 @@ const userValidation = [
     check("category", "category is requird ").not().isEmpty(),
     check("company", "company is requird ").not().isEmpty(),
     check("amount", "amount is requird ").not().isEmpty(),
-    check("country", "country is requird ").not().isEmpty(),
-    check("city", "city is requird ").not().isEmpty(),
+    check("location", "location is requird ").not().isEmpty(),
   ];
   module.exports = {
     userValidation,

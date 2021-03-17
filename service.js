@@ -1,6 +1,7 @@
 const express=require('express');
 const cors = require('cors')
 const connectDB = require('./db/index')
+const logger = require('./logger/logger')
 const app=express();
 
 connectDB()
@@ -15,4 +16,4 @@ app.use('/api/user',userRouter)
 
 const PORT=process.env.PORT || 3001
 
-app.listen(PORT,()=> console.log(`Server run on port ${PORT}`))
+app.listen(PORT,()=> logger.log('info',`Server run on port ${PORT}`))

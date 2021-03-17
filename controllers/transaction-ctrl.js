@@ -1,22 +1,23 @@
 const Transaction = require("../modules/transaction-model");
 const { validationResult } = require("express-validator");
-
+const logger = require('../logger/logger')
 
 const createTransaction = async (req, res) => {
-    const errors = validationResult(req)
-    if(!errors.isEmpty()){
-      return res.status(400).json({errors:errors.array()})
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
-    try {
-  const body = req.body;
-    const transactionReq = Transaction(body);
-    const transaction = await transactionReq.save();
+    const body = req.body;
+    const transactionSchema = Transaction(body);
+    const transaction = await transactionSchema.save();
     return res.status(201).json({
       success: true,
       id: transaction._id,
       message: "transaction created!",
     });
   } catch (err) {
+    logger.error('error',err);
     return res.status(400).json({
       err,
       message: "transaction not created!",
@@ -26,15 +27,15 @@ const createTransaction = async (req, res) => {
 
 const getTransaction = async (req, res) => {
   try {
- const transaction = await Transaction.find();
+    const transaction = await Transaction.find();
     if (!transaction) {
       return res
         .status(404)
         .json({ success: false, error: "not a single transaction was found" });
-    }else{
-        return res.status(200).json({ success: true, data: transaction });
     }
+    return res.status(200).json({ success: true, data: transaction });
   } catch (err) {
+    logger.error('error',err);
     return res.status(400).json({
       success: false,
       err,
@@ -45,25 +46,33 @@ const getTransaction = async (req, res) => {
 
 const deleteTransaction = async (req, res) => {
   try {
- const transaction = await Transaction.findOneAndDelete( { _id: req.params.id })
-        if (!transaction) {
-          return res.statuse(404).json({ success: false, err });
-        }else{
-        return res
-          .status(200)
-          .json({ success: true, message: "The transaction has been deleted" });
+    const transaction = await Transaction.findOneAndDelete({
+      _id: req.params.id,
+    });
+    if (!transaction) {
+      return res
+        .statuse(404)
+        .json({ success: false, message: "transaction does not exist" });
     }
+    return res
+      .status(200)
+      .json({ success: true, message: "The transaction has been deleted" });
   } catch (err) {
-       return res.status(400).json({ success: false, err });
+    logger.error('error',err);
+    return res.status(400).json({ success: false, err });
   }
 };
 
 const updateTransaction = async (req, res) => {
   try {
     const body = req.body;
-  const transaction = await Transaction.updateOne({ _id: req.params.id }, body);
-    return res.status(200).json({ success: true, data:transaction });
+    const transaction = await Transaction.updateOne(
+      { _id: req.params.id },
+      body
+    );
+    return res.status(200).json({ success: true, data: transaction });
   } catch (err) {
+    logger.error('error',err);
     return res.status(400).json({
       err,
       message: "transaction not updated!",

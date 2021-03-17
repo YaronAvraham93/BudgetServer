@@ -2,11 +2,6 @@ const mongoose = require("mongoose");
 
 const schema = mongoose.Schema;
 
-const locationSchema = new schema({
-  country: { type: String,required: true },
-  city: { type: String,required: true },
-});
-
 const transactionSchema = new schema(
   {
     userID: { type: schema.Types.ObjectId, ref: "Users" },
@@ -18,7 +13,9 @@ const transactionSchema = new schema(
     category: { type: String, required: true },
     company: { type: String, required: true },
     amount: { type: String, required: true },
-    location: [locationSchema],
+    location:  {
+        country: { type: String,required: true },
+       city: { type: String,required: true },},
  }
 )
 

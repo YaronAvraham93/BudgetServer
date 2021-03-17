@@ -1,11 +1,14 @@
 const mongoose = require('mongoose');
-const url='mongodb://localhost:27017/Budget'
+const logger = require('../logger/logger')
+
+const url=process.env.URL_DB
 const connectDB = async () => {
     try{
         await mongoose.connect(url,{ useNewUrlParser: true,useUnifiedTopology:true })
-        console.log('MongoDb connected');
+        logger.log('info','MongoDb connected'); 
     }catch(err){
-        console.error(err.message);
+        logger.error('error',err);
+       
     }
 }
 
