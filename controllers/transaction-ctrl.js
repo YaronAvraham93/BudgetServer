@@ -10,10 +10,10 @@ const createTransaction = async (req, res) => {
     }
     const body = req.body;
     const transactionSchema = Transaction(body);
-    const transaction = await transactionSchema.save();
+    await transactionSchema.save();
+    logger.log('info','transaction created!')
     return res.status(201).json({
       success: true,
-      id: transaction._id,
       message: "transaction created!",
     });
   } catch (err) {
@@ -33,6 +33,7 @@ const getTransaction = async (req, res) => {
         .status(404)
         .json({ success: false, error: "not a single transaction was found" });
     }
+    logger.log('info','Withdrawal of all transactions from the database')
     return res.status(200).json({ success: true, data: transaction });
   } catch (err) {
     logger.error('error',err);
@@ -54,6 +55,7 @@ const deleteTransaction = async (req, res) => {
         .statuse(404)
         .json({ success: false, message: "transaction does not exist" });
     }
+    logger.log('info','The transaction has been deleted')
     return res
       .status(200)
       .json({ success: true, message: "The transaction has been deleted" });
@@ -70,6 +72,10 @@ const updateTransaction = async (req, res) => {
       { _id: req.params.id },
       body
     );
+    if (!transaction) {
+      return res.status(400).json({ success: false, message: "Error" });
+    }
+    logger.log('info','The transaction has been updated')
     return res.status(200).json({ success: true, data: transaction });
   } catch (err) {
     logger.error('error',err);
