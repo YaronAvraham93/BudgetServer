@@ -12,7 +12,7 @@ const transaction = require('./routes/transaction-router')
 
 app.use('/api/transaction',transaction)
 app.use('/api/user',userRouter)
-
+app.get('/health-check',(req,res) =>{res.send('OK')})
 
 const PORT=process.env.PORT || 3001
 
