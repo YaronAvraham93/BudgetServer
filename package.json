@@ -2,9 +2,9 @@
   "name": "budgetserver",
   "version": "1.0.0",
   "description": "",
-  "main": "service.js",
+  "main": "index.js",
   "scripts": {
-    "start": "nodemon service.js"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
