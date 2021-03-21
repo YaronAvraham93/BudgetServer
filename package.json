@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/YaronAvraham93/budgetServer#readme",
   "dependencies": {
-    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.10.0",
