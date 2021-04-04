@@ -51,7 +51,7 @@ const getUserById = async (req, res) => {
         .json({error: `User does not exist` });
     }
     logger.log('info','User ')
-    return res.status(200).json({user});
+    return res.status(200).json(user);
   } catch (err) {
     logger.error('error',err);
   }
