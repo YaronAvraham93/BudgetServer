@@ -48,10 +48,10 @@ const getUserById = async (req, res) => {
     if (!user) {
       return res
         .status(404)
-        .json({ success: false, error: `User does not exist` });
+        .json({error: `User does not exist` });
     }
     logger.log('info','User ')
-    return res.status(200).json({ success: true, data: user });
+    return res.status(200).json({user});
   } catch (err) {
     logger.error('error',err);
   }
