@@ -12,7 +12,7 @@ const createUser = async (req, res) => {
     const userSchema = User(body);
     await userSchema.save();
     logger.log('info','"user created!')
-    return res.status(201).json(userSchema);
+     res.status(201).json({data:userSchema});
   } catch (err) {
     logger.error('error',err);
     return res.status(400).json({
