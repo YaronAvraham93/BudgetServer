@@ -26,7 +26,7 @@ const createTransaction = async (req, res) => {
 
 const getTransaction = async (req, res) => {
   try {
-    const transaction = await Transaction.find();
+    const transaction = await Transaction.find().limit(3);
     if (!transaction) {
       return res
         .status(404)
