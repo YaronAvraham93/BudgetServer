@@ -74,7 +74,7 @@ const updateTransaction = async (req, res) => {
       return res.status(400).json("Error" );
     }
     logger.log('info','The transaction has been updated')
-    return res.status(200).json(transaction );
+    return res.status(200).json('The transaction has been updated' );
   } catch (err) {
     logger.error('error',err);
     return res.status(400).json(
