@@ -7,8 +7,6 @@ const transaction = require("./routes/transaction-router");
 const app = express();
 
 connectDB();
-
-
  
 app.use(cors())
 app.use(express.json({ extended: false }));

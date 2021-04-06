@@ -8,7 +8,7 @@ const transactionSchema = new schema(
     paymentType: { type: String, required: true },
     paymentMethod: { type: String, required: true },
     cancelled: { type: Boolean, required: true },
-    date: { type: Date, default: Date.now },
+    date: { type: Date ,require:true},
     currency: { type: String, required: true },
     category: { type: String, required: true },
     company: { type: String, required: true },

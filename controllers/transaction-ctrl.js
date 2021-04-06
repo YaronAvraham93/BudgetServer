@@ -1,6 +1,8 @@
 const Transaction = require("../modules/transaction-model");
 const { validationResult } = require("express-validator");
-const logger = require('../logger/logger')
+const logger = require('../logger/logger');
+const { log } = require("../logger/logger");
+const dateFormat = require("dateformat");
 
 const createTransaction = async (req, res) => {
   try {
@@ -9,6 +11,7 @@ const createTransaction = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
     const body = req.body;
+    body.date = dateFormat(body.date, 'yyyy-mm-dd')
     const transactionSchema = Transaction(body);
     await transactionSchema.save();
     logger.log('info','transaction created!')
@@ -26,14 +29,19 @@ const createTransaction = async (req, res) => {
 
 const getTransaction = async (req, res) => {
   try {
-    const transaction = await Transaction.find();
+     
+    const defaultLimit = 0
+    const defaulSort = 'date'
+    const sortBy=req.query.sortBy || defaulSort
+    const limit = Number(req.query.limit || defaultLimit)
+    const transaction = await Transaction.find().sort(sortBy).limit(limit)
     if (!transaction) {
       return res
         .status(404)
         .json( "not a single transaction was found" );
     }
     logger.log('info','Withdrawal of all transactions from the database')
-    return res.status(200).json( transaction ).limit(3);;
+    return res.status(200).json( transaction );
   } catch (err) {
     logger.error('error',err);
     return res.status(400).json(
