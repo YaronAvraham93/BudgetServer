@@ -12,13 +12,13 @@ const createUser = async (req, res) => {
     const userSchema = User(body);
     await userSchema.save();
     logger.log('info','"user created!')
-     res.status(201).json({data:userSchema});
+     res.status(201).json(userSchema);
   } catch (err) {
     logger.error('error',err);
-    return res.status(400).json({
+    return res.status(400).json(
       err,
-      message: "user not created!",
-    });
+      "user not created!",
+    );
   }
 };
 
@@ -26,16 +26,13 @@ const deleteUser = async (req, res) => {
   try {
     const user = await User.findOneAndDelete({ _id: req.params.id });
 
-    if (!user) {
-      return res.statuse(404).json({ success: false, err });
-    }
     logger.log('info','The user has been deleted')
     return res
       .status(200)
-      .json({ success: true, message: "The user has been deleted" });
+      .json("The user has been deleted" );
   } catch (err) {
     logger.error('error',err);
-    return res.status(400).json({ success: false, err });
+    return res.status(400).json(err);
   }
 };
 
@@ -51,6 +48,7 @@ const getUserById = async (req, res) => {
     return res.status(200).json(user);
   } catch (err) {
     logger.error('error',err);
+    return res.status(400).json(err);
   }
 };
 
@@ -59,16 +57,16 @@ const updateUser = async (req, res) => {
     const body = req.body;
     const user = await User.updateOne({ _id: req.params.id }, body);
     if (!user) {
-      return res.status(400).json({ success: false, message: "Error" });
+      return res.status(400).json( "Error" );
     }
     logger.log('info','User has been update')
-    return res.status(200).json({ success: true, data: user });
+    return res.status(200).json(user);
   } catch (err) {
     logger.error('error',err);
-    return res.status(400).json({
+    return res.status(400).json(
       err,
-      message: "user not updated!",
-    });
+       "user not updated!",
+);
   }
 };
 

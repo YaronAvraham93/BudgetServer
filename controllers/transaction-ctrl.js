@@ -12,16 +12,15 @@ const createTransaction = async (req, res) => {
     const transactionSchema = Transaction(body);
     await transactionSchema.save();
     logger.log('info','transaction created!')
-    return res.status(201).json({
-      success: true,
-      message: "transaction created!",
-    });
+    return res.status(201).json(
+       "transaction created!",
+    );
   } catch (err) {
     logger.error('error',err);
-    return res.status(400).json({
+    return res.status(400).json(
       err,
-      message: "transaction not created!",
-    });
+      "transaction not created!",
+    );
   }
 };
 
@@ -31,17 +30,16 @@ const getTransaction = async (req, res) => {
     if (!transaction) {
       return res
         .status(404)
-        .json({ success: false, error: "not a single transaction was found" });
+        .json( "not a single transaction was found" );
     }
     logger.log('info','Withdrawal of all transactions from the database')
     return res.status(200).json( transaction );
   } catch (err) {
     logger.error('error',err);
-    return res.status(400).json({
-      success: false,
+    return res.status(400).json(
       err,
-      message: "Could not get transaction!",
-    });
+      "Could not get transaction!",
+    );
   }
 };
 
@@ -53,15 +51,15 @@ const deleteTransaction = async (req, res) => {
     if (!transaction) {
       return res
         .statuse(404)
-        .json({ success: false, message: "transaction does not exist" });
+        .json("transaction does not exist" );
     }
     logger.log('info','The transaction has been deleted')
     return res
       .status(200)
-      .json({ success: true, message: "The transaction has been deleted" });
+      .json( "The transaction has been deleted" );
   } catch (err) {
     logger.error('error',err);
-    return res.status(400).json({ success: false, err });
+    return res.status(400).json( err );
   }
 };
 
@@ -73,16 +71,16 @@ const updateTransaction = async (req, res) => {
       body
     );
     if (!transaction) {
-      return res.status(400).json({ success: false, message: "Error" });
+      return res.status(400).json("Error" );
     }
     logger.log('info','The transaction has been updated')
-    return res.status(200).json({ success: true, data: transaction });
+    return res.status(200).json(transaction );
   } catch (err) {
     logger.error('error',err);
-    return res.status(400).json({
+    return res.status(400).json(
       err,
-      message: "transaction not updated!",
-    });
+     "transaction not updated!",
+    );
   }
 };
 module.exports = {
