@@ -33,7 +33,7 @@ const getTransaction = async (req, res) => {
         .json( "not a single transaction was found" );
     }
     logger.log('info','Withdrawal of all transactions from the database')
-    return res.status(200).json( transaction );
+    return res.status(200).json( transaction ).limit(3);;
   } catch (err) {
     logger.error('error',err);
     return res.status(400).json(

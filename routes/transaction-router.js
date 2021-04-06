@@ -5,7 +5,7 @@ const validation = require('../validationChacks/validation')
 
 const router = express.Router();
 
-router.post('/',validation.transactionValidation,transactionCtrl.createTransaction.limit(3));
+router.post('/',validation.transactionValidation,transactionCtrl.createTransaction);
 
 router.get('/transactions', transactionCtrl.getTransaction);
 
