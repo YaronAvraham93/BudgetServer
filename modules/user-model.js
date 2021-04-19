@@ -9,13 +9,13 @@ const creditCardSchema = new schema({
 })
 
 const userSchema = new schema({
-    first_name: { type: String, required: true },
-    last_name: { type: String, required: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
     email: { type: String, required: true,unique:true },
     avatar: { type: String, required: true },
     current_balance: { type: String, required: true },
-    current_balance_currency: { type: String, required: true },
-    credit_card:[creditCardSchema]
+    currentBalanceCurrency: { type: String, required: true },
+    creditCard:[creditCardSchema]
     
 })
 
