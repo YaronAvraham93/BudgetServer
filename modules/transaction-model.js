@@ -12,7 +12,7 @@ const transactionSchema = new schema(
     currency: { type: String, required: true },
     category: { type: String, required: true },
     company: { type: String, required: true },
-    amount: { type: String, required: true },
+    amount: { type: Number, required: true },
     location:  {
         country: { type: String,required: true },
        city: { type: String,required: true },},
